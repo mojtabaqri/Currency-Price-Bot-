@@ -18,7 +18,7 @@ if($fullMessage->from->id!=admin){
 //----------------------------------------------------------------------------------------------------------
 do{
     $priceList=connect();
-    $data="🟢 هم اکنون قیمت دلار آزاد \n "."در تاریخ: ".jdate('m/d/y H:i:s',$priceList->usd->date)."\n";
+    $data="🟢 هم اکنون قیمت دلار آزاد \n "."در تاریخ: ".jdate('y/m/d    H:i:s',$priceList->usd->date)."\n";
     $data.=$priceList->usd->value."تومان میباشد "."\n";
     $data.="@myChannel \t 🔶";
     sendMessage(channels[1],$data);
