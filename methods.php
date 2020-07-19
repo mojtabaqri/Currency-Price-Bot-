@@ -35,7 +35,7 @@ function connect(){
 }
 //-----------------------------------------methods-------------------------------------------------------------
 
-function SendMessage($chat_id, $text){
+function sendMessage($chat_id, $text){
     bot('sendMessage',[
         'chat_id'=>$chat_id,
         'text'=>$text,
