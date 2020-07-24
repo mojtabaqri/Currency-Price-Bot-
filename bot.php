@@ -13,15 +13,15 @@ if($fullMessage->from->id!=admin){
     exit();
 }
 //end Check
-//if message has attachment $attachment is true ---------------------
 
 //----------------------------------------------------------------------------------------------------------
 do{
-    $priceList=connect();
-    $data="🟢 هم اکنون قیمت دلار آزاد \n "."در تاریخ: ".jdate('y/m/d    H:i:s',$priceList->usd->date)."\n";
-    $data.=$priceList->usd->value."تومان میباشد "."\n";
+    $priceList=getDolorPrice();;
+    $data="🟢 هم اکنون قیمت دلار آزاد \n "."در تاریخ: ".jdate('y/m/d    H:i:s')."\n";
+    $data.=$priceList."تومان میباشد "."\n";
     $data.="@myChannel \t 🔶";
+    sleep(60);
     sendMessage(channels[1],$data);
-    sleep(1800);
 }
 while(true);
+

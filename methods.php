@@ -1,5 +1,6 @@
 <?php
 require_once 'config.php';
+require 'simple_html_dom.php';
 function bot($method, $datas = [])
 {
     $url = "https://api.telegram.org/bot" . apiKey . "/" . $method;
@@ -19,19 +20,29 @@ function bot($method, $datas = [])
 }
 
 
-function connect(){
+function connect($url,$jsonResponse=false){
     $headers = array(
         'Accept: application/json',
         'Content-Type: application/json',
     );
     $cURLConnection = curl_init();
-    curl_setopt($cURLConnection, CURLOPT_URL, 'https://www.navasan.net/last_currencies.php');
+    curl_setopt($cURLConnection, CURLOPT_URL, $url);
     curl_setopt($cURLConnection, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($cURLConnection, CURLOPT_HTTPHEADER, $headers);
     $body = curl_exec($cURLConnection);
     curl_close($cURLConnection);
     $jsonArrayResponse = json_decode($body);
     return $jsonArrayResponse;
+}
+
+function getDolorPrice(){
+    $html=file_get_html("http://www.tgju.org");
+    $dolor="";
+    foreach ($html->find('#l-price_dollar_rl > .info-value >.info-price') as $e)
+    {
+        $dolor=$e->innertext;
+    }
+    return $dolor;
 }
 //-----------------------------------------methods-------------------------------------------------------------
 
