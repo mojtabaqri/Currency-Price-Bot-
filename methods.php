@@ -35,15 +35,43 @@ function connect($url,$jsonResponse=false){
     return $jsonArrayResponse;
 }
 
-function getDolorPrice(){
+function getPriceList(){
+    $priceList=[
+        'dolor'=>'%nan%',
+        'ons'=>'%nan%',
+        'gold18'=>'%nan%',
+        'seke'=>'%nan%',
+        'mesghal'=>'%nan%',
+        'euro'=>'%nan%',
+    ];
     $html=file_get_html("http://www.tgju.org");
-    $dolor="";
     foreach ($html->find('#l-price_dollar_rl > .info-value >.info-price') as $e)
     {
-        $dolor=$e->innertext;
+        $priceList['dolor']=$e->innertext;
     }
-    return $dolor;
+    foreach ($html->find('#l-ons > .info-value >.info-price') as $e)
+    {
+        $priceList['ons']=$e->innertext;
+    }
+    foreach ($html->find('#l-geram18 > .info-value >.info-price') as $e)
+    {
+        $priceList['gold18']=$e->innertext;
+    }
+    foreach ($html->find('#l-irec_future > .info-value >.info-price') as $e)
+    {
+        $priceList['seke']=$e->innertext;
+    }
+    foreach ($html->find('#l-mesghal > .info-value >.info-price') as $e)
+    {
+        $priceList['mesghal']=$e->innertext;
+    }
+    foreach ($html->find('#l-price_eur > .info-value >.info-price') as $e)
+    {
+        $priceList['euro']=$e->innertext;
+    }
+    return $priceList;
 }
+
 //-----------------------------------------methods-------------------------------------------------------------
 
 function sendMessage($chat_id, $text){
@@ -52,6 +80,14 @@ function sendMessage($chat_id, $text){
         'text'=>$text,
         'parse_mode'=>'MarkDown']);
 }
+function editMessage($messageId, $text,$chatId){
+    bot('editMessageText',[
+        'text'=>$text,
+        'chat_id'=>$chatId,
+        'message_id'=>$messageId,
+        'parse_mode'=>'MarkDown']);
+}
+
 function sendphoto($chat_id, $photo, $captionl){
     bot('sendphoto',[
         'chat_id'=>$chat_id,
